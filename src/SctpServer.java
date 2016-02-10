@@ -25,15 +25,19 @@ public class SctpServer
 				//The method blocks until a connection is made
 				//Returns a new SCTPChannel between the server and client
 				SctpChannel sctpChannel = sctpServerChannel.accept();
+				
 				//Receive message in the channel (byte format) and store it in buf
-				//Note: Actual message is in byre format stored in buf
+				//Note: Actual message is in byte format stored in buf
 				//MessageInfo has additional details of the message
 				MessageInfo messageInfo = sctpChannel.receive(byteBuffer,null,null);
+				
 				//Just seeing what gets stored in messageInfo
 				System.out.println(messageInfo);
+				
 				//Converting bytes to string. This looks nastier than in TCP
 				//So better use a function call to write once and forget it :)
 				message = byteToString(byteBuffer);
+				
 				//Finally the actual message
 				System.out.println(message);
 			}

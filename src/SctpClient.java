@@ -14,18 +14,25 @@ public class SctpClient
 		{
 			//Create a socket address for  server at net01 at port 6889
 			SocketAddress socketAddress = new InetSocketAddress("localhost",6889);
+			
 			//Open a channel. NOT SERVER CHANNEL
 			SctpChannel sctpChannel = SctpChannel.open();
+			
 			//Bind the channel's socket to a local port. Again this is not a server bind
 			sctpChannel.bind(new InetSocketAddress(5000));
+			
 			//Connect the channel's socket to  the remote server
 			sctpChannel.connect(socketAddress);
+			
 			//Before sending messages add additional information about the message
 			MessageInfo messageInfo = MessageInfo.createOutgoing(null,0);
+			
 			//convert the string message into bytes and put it in the byte buffer
 			byteBuffer.put(message.getBytes());
+			
 			//Reset a pointer to point to the start of buffer 
 			byteBuffer.flip();
+			
 			//Send a message in the channel (byte format)
 			sctpChannel.send(byteBuffer,messageInfo);
 		}
