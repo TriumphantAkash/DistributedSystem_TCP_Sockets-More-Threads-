@@ -14,6 +14,8 @@ public class DistributedClientServer {
 	private static boolean nodeIsVergin = true;
 	private static Node node;
 	
+	
+	
 	public static ServerSocket getServerSocket() {
 		return serverSocket;
 	}
@@ -23,30 +25,47 @@ public class DistributedClientServer {
 	
 	public static void main(String argv[]) throws IOException {
 		
-		//parse config file here and then extract the relevant information from it 
+		/*
+		 * parse the config file (passed in command line argument) here and initialize 'node' variable with the corresponding values for this particular node
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
+		
 		try {
 			serverSocket = new ServerSocket(6969);
 		    
-			while(true){             
+			while(true){
+				//this condition is specifically for the root node
+				//make sure you deploy the code on root node at last
+				
+				if(node.isRoot() && nodeIsVergin) {
+					for(Node node:node.getNeighbours()){
+						ClientThread clientThread = new ClientThread(node.getHostName(), node.getPort());
+						clientThread.start();
+					}
+				}
+				
 				Socket clientSocket = serverSocket.accept();
 				
 				//control comes here whenever a new client is connected to the server
 				clientSocket.getLocalAddress();
 				clientSocket.getLocalPort();
 				
-				
-//				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-//				curr_client.setInputStream(inFromClient);
-//				
-//				DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-//				curr_client.setOutputStream(outToClient);
-				
 				ServerThread serverThread = new ServerThread(clientSocket);
-				if(nodeIsVergin) {
+				serverThread.start();
+				
+				
+				if(!node.isRoot() && nodeIsVergin) {
 					//create clientThreads for all the neighbors
 					for(Node node:node.getNeighbours()){
 						ClientThread clientThread = new ClientThread(node.getHostName(), node.getPort());
+						clientThread.start();
 					}
+					
+					//current node loses its virginity i.e has invoked its client threads
 					nodeIsVergin = false;
 				}
 			}
