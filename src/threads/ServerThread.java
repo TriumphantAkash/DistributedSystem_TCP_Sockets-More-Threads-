@@ -18,6 +18,6 @@ public class ServerThread extends Thread{
 	
 
 	public void run(){
-		//interact with the client thread here
+		//interact with the client here
 	}
 }
