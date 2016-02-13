@@ -13,7 +13,7 @@ public class SctpClient
 		try
 		{
 			//Create a socket address for  server at net01 at port 6889
-			SocketAddress socketAddress = new InetSocketAddress("localhost",6889);
+			SocketAddress socketAddress = new InetSocketAddress("dc01",6889);
 			
 			//Open a channel. NOT SERVER CHANNEL
 			SctpChannel sctpChannel = SctpChannel.open();

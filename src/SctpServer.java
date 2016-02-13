@@ -14,7 +14,7 @@ public class SctpServer
 		{
 			//Open a server channel
 			SctpServerChannel sctpServerChannel = SctpServerChannel.open();
-			//Create a socket addess in the current machine at port 6889
+			//Create a socket address in the current machine at port 6889
 			InetSocketAddress serverAddr = new InetSocketAddress(6889);
 			//Bind the channel's socket to the server in the current machine at port 5000
 			sctpServerChannel.bind(serverAddr);
