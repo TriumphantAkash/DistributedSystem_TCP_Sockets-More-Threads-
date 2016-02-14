@@ -36,12 +36,19 @@ public class ClientThread extends Thread{
 		try {
 			clientSocket = new Socket(hostIP, port);
 			//talk to the server now
-			String message = "a message from clientThread";
+			String message = "find_msg";
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
 			outToServer.writeBytes(message+"\n");
 			
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));  
-			System.out.println(inFromServer.readLine());
+			//System.out.println(inFromServer.readLine());
+			if(inFromServer.readLine().equals("ack_msg")){
+				//I found my child in the tree
+				//I am parent
+			}else {
+				//the one I am talking to is already in the hierarchy
+				//
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
